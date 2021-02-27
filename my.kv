@@ -1,0 +1,83 @@
+
+<MainWindow>:
+    no_of_questions:no_of_questions
+    fib:fib
+    name:"main"
+    GridLayout:
+        cols:1
+        GridLayout:
+            cols:2
+            Label:
+                text:"QUESTIONS"
+                font_size:50
+                background_color:(1,181/255,213/255,0.9)
+                canvas.before:
+                    Color:
+                        rgba:self.background_color
+                    Rectangle:
+                        size:self.size
+                        pos:self.pos
+                color:(1,0,0,0.7)
+                bold:True
+                italic:True
+                outline_color:(0,0,0)
+                outline_width: 2
+            TextInput:
+                id: no_of_questions
+                font_size:100
+                halign:'center'
+                multiline : False
+            Label:
+                text:"FILL IN THE BLANKS"
+                font_size:40
+                background_color:(1,99/255,71/255,1)
+                canvas.before:
+                    Color:
+                        rgba:self.background_color
+                    Rectangle:
+                        size:self.size
+                        pos:self.pos
+                color:(1,0,0,0.7)
+                bold:True
+                italic:True
+                outline_color:(0,0,0)
+                outline_width: 2
+            TextInput:
+                id: fib
+                font_size:100
+                halign:'center'
+                multiline : False
+
+        Button:
+            text:"SUBMIT"
+            font_size:40
+            color:(60/255,211/255,0,0.7)
+            bold:True
+            italic:True
+            outline_color:(0,0,0)
+            outline_width: 2
+            size_hint_y: None
+            height:'200dp'
+            background_normal:''
+            background_color: (0.19,0.8,0.55,0.7)
+            on_release:
+                root.button()
+                app.root.current="second"
+                root.manager.transition.direction="left"
+            
+
+<SecondWindow>:
+    name:"second"
+    Button:
+        text:"File has been downloaded to output.txt"
+        background_normal:''
+
+        background_color: (0.19,0.8,0.55,0.7)
+        font_size:40
+        color:(60/255,211/255,0,0.7)
+        bold:True
+        italic:True
+        outline_color:(0,0,0)
+        outline_width: 4
+
+
