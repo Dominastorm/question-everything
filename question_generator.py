@@ -9,7 +9,7 @@ import nltk
 # qsns = no. of questions
 # blanks = no. of fill in the blanks
 def generator(input_text, qsns=5, blanks=5):
-    output_file = open(r"C:\My Folders\Competitions\SpaceJam 2021\Final Files\output.txt", "w")
+    output_file = open(r"output.txt", "w")
 
     # semantic role labelling
     srl_predictor = Predictor.from_path("https://storage.googleapis.com/allennlp-public-models/structured-prediction-srl-bert.2020.12.15.tar.gz")
@@ -29,8 +29,6 @@ def generator(input_text, qsns=5, blanks=5):
     tagged = {}
 
     tokenized = d_ner['words']
-    print(tokenized)
-
 
     tagged_list = []
 
@@ -40,7 +38,6 @@ def generator(input_text, qsns=5, blanks=5):
             tagged_list.append(list(nltk.pos_tag(words)[0]))
 
     process_contents()
-    # print(tagged_list)
 
     arg0 = []
     arg1 = []
@@ -54,8 +51,37 @@ def generator(input_text, qsns=5, blanks=5):
                 start = i.index(':')+2
                 arg1.append(i[start:])
 
-    print(arg0)
-    print(arg1)
-    output_file.write(input_text)
-    output_file.write("qsns: "+str(qsns)+" fib: "+str(blanks))
+
+    sentences = []
+    i = 0
+    j = 0
+    while j < len(tokenized):
+        if tokenized[j] == '.':
+            sentences.append(tokenized[i:j])
+            i = j
+        j += 1
+
+    for i in range(1, len(sentences)):
+        sentences[i] = sentences[i][1:]
+
+    questions = []
+    for i in range(len(sentences)):
+        for j in sentences[i]:
+            for k in arg0:
+                if k == j:
+                    questions[i].append("Who")
+                else:
+                    questions[i].append(j)
+
+    questions = " ".join(questions).split('Who')
+    questions = ["Who" + i for i in questions]
+ 
+    for i in questions:
+        output_file.writelines(questions)
     output_file.close()
+
+
+
+if __name__ == "__main__":
+    file = open("testing.txt", "r")
+    generator(file.read())
